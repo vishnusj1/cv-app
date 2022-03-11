@@ -46,6 +46,7 @@ class App extends React.Component {
     this.removeEducationForm = this.removeEducationForm.bind(this);
     this.changeViewMode = this.changeViewMode.bind(this);
     this.addSkill = this.addSkill.bind(this);
+    this.removeSkill = this.removeSkill.bind(this);
   }
   handlePersonalChange(e) {
     const { name, value } = e.target;
@@ -65,13 +66,10 @@ class App extends React.Component {
         return item;
       }
     });
-    this.setState(
-      (prevState) => ({
-        ...prevState,
-        education: [...obj],
-      }),
-      () => console.log(name, value, this.state.education)
-    );
+    this.setState((prevState) => ({
+      ...prevState,
+      education: [...obj],
+    }));
   }
   addEducation(e) {
     const obj = {
@@ -107,6 +105,7 @@ class App extends React.Component {
       professional: [...obj],
     }));
   }
+
   addProfession(e) {
     const obj = {
       id: uniqid(),
@@ -118,6 +117,7 @@ class App extends React.Component {
     const professional = this.state.professional.concat(obj);
     this.setState(() => ({ professional }));
   }
+
   removeProfessionalForm(e, id) {
     e.preventDefault();
     const obj = [...this.state.professional.filter((obj) => obj.id !== id)];
@@ -129,13 +129,20 @@ class App extends React.Component {
 
   addSkill(e) {
     e.preventDefault();
-    const skills = this.state.skills.concat(e.target.skills.value);
+    const value = formatValue(e.target.skills.value);
+    const skills = this.state.skills.concat(value);
     this.setState(
       () => ({ skills }),
       () => {
         e.target.skills.value = '';
       }
     );
+  }
+
+  removeSkill(e) {
+    const str = e.currentTarget.previousSibling.data;
+    const skills = [...this.state.skills.filter((skill) => skill !== str)];
+    this.setState(() => ({ skills }));
   }
 
   changeViewMode() {
@@ -164,6 +171,7 @@ class App extends React.Component {
             onRemoveProfession={this.removeProfessionalForm}
             onRemoveEducation={this.removeEducationForm}
             onAddSkill={this.addSkill}
+            onRemoveSkill={this.removeSkill}
           />
         )}
       </div>
@@ -171,3 +179,7 @@ class App extends React.Component {
   }
 }
 export default App;
+
+const formatValue = (str) => {
+  return str[0].toUpperCase() + str.substring(1);
+};

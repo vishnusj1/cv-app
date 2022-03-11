@@ -5,10 +5,11 @@ import uniqid from 'uniqid';
 
 export default class SkillForm extends React.Component {
   render() {
+    const { removeSkill } = this.props;
     const skillList = this.props.skills.map((skill) => (
       <li key={uniqid()}>
         {skill}
-        <span>
+        <span onClick={(e) => removeSkill(e)}>
           <FontAwesomeIcon icon={faXmark} />
         </span>
       </li>

@@ -10,7 +10,7 @@ class Form extends React.Component {
     const { onChangePersonal, onChangeProfessional, onChangeEducation } = this.props;
     const { onAddEducation, onAddProfession } = this.props;
     const { onRemoveEducation, onRemoveProfession } = this.props;
-    const { onAddSkill } = this.props;
+    const { onAddSkill, onRemoveSkill } = this.props;
     return (
       <div className="container">
         <PersonalForm personalInfo={personal} handleChange={onChangePersonal} />
@@ -26,7 +26,7 @@ class Form extends React.Component {
           addForm={onAddEducation}
           removeForm={onRemoveProfession}
         />
-        <SkillForm skills={skills} addSkill={onAddSkill} />
+        <SkillForm skills={skills} addSkill={onAddSkill} removeSkill={onRemoveSkill} />
       </div>
     );
   }
