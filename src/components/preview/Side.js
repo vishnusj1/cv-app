@@ -1,7 +1,17 @@
 import React from 'react';
+import uniqid from 'uniqid';
 export default class Side extends React.Component {
   render() {
     const { email, phone } = this.props.cv.personal;
+    const { skills } = this.props.cv;
+    const skillList = skills.map((skill) => {
+      if (skills.indexOf(skill) === skills.length - 1) {
+        return <span key={uniqid()}>{skill}</span>;
+      } else {
+        return <span key={uniqid()}>{skill}, </span>;
+      }
+    });
+
     return (
       <div className="side">
         <div>
@@ -11,10 +21,7 @@ export default class Side extends React.Component {
         </div>
         <div>
           <h3>Skills</h3>
-          <p>lorem ipsum</p>
-          <p>lorem ipsum</p>
-          <p>lorem ipsum</p>
-          <p>lorem ipsum</p>
+          <p>{skillList}</p>
         </div>
       </div>
     );

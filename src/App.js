@@ -34,6 +34,7 @@ class App extends React.Component {
           to: '',
         },
       ],
+      skills: [],
       preview: false,
     };
     this.handlePersonalChange = this.handlePersonalChange.bind(this);
@@ -44,6 +45,7 @@ class App extends React.Component {
     this.addEducation = this.addEducation.bind(this);
     this.removeEducationForm = this.removeEducationForm.bind(this);
     this.changeViewMode = this.changeViewMode.bind(this);
+    this.addSkill = this.addSkill.bind(this);
   }
   handlePersonalChange(e) {
     const { name, value } = e.target;
@@ -124,6 +126,18 @@ class App extends React.Component {
       professional: [...obj],
     }));
   }
+
+  addSkill(e) {
+    e.preventDefault();
+    const skills = this.state.skills.concat(e.target.skills.value);
+    this.setState(
+      () => ({ skills }),
+      () => {
+        e.target.skills.value = '';
+      }
+    );
+  }
+
   changeViewMode() {
     this.setState((prevState) => ({
       ...prevState,
@@ -149,6 +163,7 @@ class App extends React.Component {
             onAddEducation={this.addEducation}
             onRemoveProfession={this.removeProfessionalForm}
             onRemoveEducation={this.removeEducationForm}
+            onAddSkill={this.addSkill}
           />
         )}
       </div>

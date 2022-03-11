@@ -183,3 +183,27 @@ hr {
 .changeMode:hover {
   background-color: rgb(51, 118, 66);
 }
+/* Skills */
+/* Form */
+.skills {
+  margin-top: 20px;
+  text-transform: capitalize;
+  border-bottom: 1px solid #262b33;
+}
+.skills ul {
+  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+}
+.skills li {
+  display: inline-block;
+  background-color: #e1e4eb;
+  padding: 0.3rem 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 3px;
+}
+.skills li span {
+  margin-left: 0.3rem;
+  cursor: pointer;
+}
