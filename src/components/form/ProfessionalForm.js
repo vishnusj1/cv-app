@@ -18,7 +18,7 @@ export default class ProfessionalForm extends React.Component {
     ));
     return (
       <section className="ProfessionalForm">
-        <h2>Professional</h2>
+        <h2>Professional History</h2>
         {professionalFormItems}
         <button className="btn add" onClick={(e) => addForm(e)}>
           Add

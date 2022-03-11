@@ -17,7 +17,7 @@ export default class EducationForm extends React.Component {
     ));
     return (
       <section className="EducationForm">
-        <h2>Education</h2>
+        <h2>Education History</h2>
         {EducationFormItems}
         <button className="btn add" onClick={(e) => addForm(e)}>
           Add
