@@ -2,7 +2,7 @@ import React from 'react';
 import uniqid from 'uniqid';
 import Form from './components/form/Form';
 import Preview from './components/preview/Preview';
-import './App.css';
+import './styles/App.css';
 
 class App extends React.Component {
   constructor(props) {

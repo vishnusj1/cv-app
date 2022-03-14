@@ -1,0 +1,77 @@
+/* CSS For Preview */
+i {
+  font-weight: 300;
+}
+h4 {
+  font-weight: 500;
+}
+.preview {
+  margin: 10px auto;
+  max-width: 210mm;
+  height: 290mm;
+}
+.resume {
+  color: #1e2019;
+}
+.resume h3 {
+  color: #338a41;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.resume h4 {
+  font-size: 1.2rem;
+}
+.name {
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 48px;
+}
+.title {
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+.resume {
+  padding: 20px;
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+hr {
+  border: none;
+  background-color: #012903;
+  height: 2px;
+  margin: 0 auto;
+}
+.body {
+  display: flex;
+  margin-top: 20px;
+}
+.profile {
+  margin-bottom: 10px;
+}
+.personal {
+  display: flex;
+}
+.main {
+  flex: 3;
+  margin-right: 20px;
+}
+.main div {
+  margin-bottom: 20px;
+}
+.side {
+  flex: 1 1;
+}
+.side div {
+  margin-bottom: 20px;
+}
+.period {
+  color: #5f6368;
+  font-size: 0.9rem;
+  line-height: 1rem;
+  margin-bottom: 10px;
+}

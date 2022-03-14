@@ -1,0 +1,54 @@
+section {
+  padding: 20px 60px 10px 60px;
+}
+section:nth-of-type(3) {
+  padding-bottom: 20px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+label {
+  margin: 8px 0;
+  line-height: 20px;
+}
+input {
+  background-color: #e1e4eb;
+  padding: 6px 8px;
+  border: 0;
+  font-size: 16px;
+  border-radius: 3px;
+}
+button {
+  width: min-content;
+  padding: 4px 6px;
+}
+textarea {
+  background-color: #e1e4eb;
+  padding: 6px 8px;
+  border: 0;
+  font-size: 16px;
+  border-radius: 3px;
+}
+
+.mg-l-a {
+  margin-left: auto;
+}
+.mg-r-a {
+  margin-right: auto;
+}
+.rmv {
+  margin-top: 10px;
+}
+.add {
+  margin-top: 10px;
+}
+form .Name {
+  display: flex;
+  flex-flow: row wrap;
+}
+.Name div {
+  display: flex;
+  flex-direction: column;
+}
