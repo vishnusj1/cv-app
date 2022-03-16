@@ -1,12 +1,12 @@
 import React from 'react';
-const PersonalForm = ({ personalInfo, handleChange, handleValidation, errors }) => {
+const PersonalForm = ({ personalInfo, handleChange }) => {
   const { fname, lname, email, phone, title, summary } = personalInfo;
-  const { firstName: ERRFNAME } = errors;
+  // const { firstName: ERRFNAME } = errors;
 
   return (
     <section className="PersonalForm">
       <h2>Personal Details</h2>
-      <form action="" className="form ">
+      <form className="form ">
         <label htmlFor="title">Wanted Job Title</label>
         <input
           type="email"
@@ -20,15 +20,8 @@ const PersonalForm = ({ personalInfo, handleChange, handleValidation, errors }) 
         <div className="Name">
           <div className="mg-r-a">
             <label htmlFor="fname">First Name</label>
-            <input
-              type="text"
-              name="fname"
-              id="fname"
-              value={fname}
-              onChange={handleChange}
-              onBlur={(e) => handleValidation(e)}
-            />
-            {ERRFNAME !== '' && <span className="errorDescription">{ERRFNAME}</span>}
+            <input type="text" name="fname" id="fname" value={fname} onChange={handleChange} />
+            {/* {ERRFNAME !== '' && <span className="errorDescription">{ERRFNAME}</span>} */}
           </div>
           <div>
             <label htmlFor="lname">Last Name</label>
