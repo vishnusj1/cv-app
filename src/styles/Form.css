@@ -52,3 +52,11 @@ form .Name {
   display: flex;
   flex-direction: column;
 }
+.errorDescription {
+  color: #c20114;
+  font-style: italic;
+  font-size: 0.8rem;
+}
+.err {
+  border: 1px solid #c20114;
+}
