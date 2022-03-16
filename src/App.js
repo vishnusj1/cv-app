@@ -1,77 +1,69 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import uniqid from 'uniqid';
 import Form from './components/form/Form';
 import Preview from './components/preview/Preview';
 import './styles/App.css';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      personal: {
-        fname: '',
-        lname: '',
-        email: '',
-        phone: '',
+const App = () => {
+  const [state, setState] = useState({
+    personal: {
+      fname: '',
+      lname: '',
+      email: '',
+      phone: '',
+      title: '',
+      summary: '',
+    },
+    professional: [
+      {
+        id: uniqid(),
+        company: '',
         title: '',
-        summary: '',
+        from: '',
+        to: '',
       },
-      professional: [
-        {
-          id: uniqid(),
-          company: '',
-          title: '',
-          from: '',
-          to: '',
-        },
-      ],
-      education: [
-        {
-          id: uniqid(),
-          school: '',
-          degree: '',
-          from: '',
-          to: '',
-        },
-      ],
-      skills: [],
-      preview: false,
-    };
-    this.handlePersonalChange = this.handlePersonalChange.bind(this);
-    this.handleProfessionalChange = this.handleProfessionalChange.bind(this);
-    this.handleEducationalChange = this.handleEducationalChange.bind(this);
-    this.addProfession = this.addProfession.bind(this);
-    this.removeProfessionalForm = this.removeProfessionalForm.bind(this);
-    this.addEducation = this.addEducation.bind(this);
-    this.removeEducationForm = this.removeEducationForm.bind(this);
-    this.changeViewMode = this.changeViewMode.bind(this);
-    this.addSkill = this.addSkill.bind(this);
-    this.removeSkill = this.removeSkill.bind(this);
-  }
-  handlePersonalChange(e) {
+    ],
+    education: [
+      {
+        id: uniqid(),
+        school: '',
+        degree: '',
+        from: '',
+        to: '',
+      },
+    ],
+    skills: [],
+  });
+  const [preview] = useState(false);
+  // const [errors, setErrors] = useState(false);
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
+
+  const handlePersonalChange = (e) => {
     const { name, value } = e.target;
     const personal = {
-      ...this.state.personal,
+      ...state.personal,
       [name]: value,
     };
-    this.setState(() => ({ personal }));
-  }
+    setState({ ...state, personal });
+  };
 
-  handleEducationalChange(e, id) {
+  const handleEducationalChange = (e, id) => {
     const { name, value } = e.target;
-    const obj = this.state.education.map((item) => {
+    const obj = state.education.map((item) => {
       if (item.id === id) {
         return { ...item, [name]: value };
       } else {
         return item;
       }
     });
-    this.setState((prevState) => ({
+    setState((prevState) => ({
       ...prevState,
       education: [...obj],
     }));
-  }
-  addEducation(e) {
+  };
+  const addEducation = (e) => {
     const obj = {
       id: uniqid(),
       school: '',
@@ -79,34 +71,34 @@ class App extends React.Component {
       from: '',
       to: '',
     };
-    const education = this.state.education.concat(obj);
-    this.setState(() => ({ education }));
-  }
-  removeEducationForm(e, id) {
+    const education = state.education.concat(obj);
+    setState({ ...state, education });
+  };
+  const removeEducationForm = (e, id) => {
     e.preventDefault();
-    const obj = [...this.state.education.filter((obj) => obj.id !== id)];
-    this.setState((prevState) => ({
+    const obj = [...state.education.filter((obj) => obj.id !== id)];
+    setState((prevState) => ({
       ...prevState,
       education: [...obj],
     }));
-  }
+  };
 
-  handleProfessionalChange(e, id) {
+  const handleProfessionalChange = (e, id) => {
     const { name, value } = e.target;
-    const obj = this.state.professional.map((item) => {
+    const obj = state.professional.map((item) => {
       if (item.id === id) {
         return { ...item, [name]: value };
       } else {
         return item;
       }
     });
-    this.setState((prevState) => ({
+    setState((prevState) => ({
       ...prevState,
       professional: [...obj],
     }));
-  }
+  };
 
-  addProfession(e) {
+  const addProfession = (e) => {
     const obj = {
       id: uniqid(),
       company: '',
@@ -114,70 +106,69 @@ class App extends React.Component {
       from: '',
       to: '',
     };
-    const professional = this.state.professional.concat(obj);
-    this.setState(() => ({ professional }));
-  }
+    const professional = state.professional.concat(obj);
+    setState({ ...state, professional });
+  };
 
-  removeProfessionalForm(e, id) {
+  const removeProfessionalForm = (e, id) => {
     e.preventDefault();
-    const obj = [...this.state.professional.filter((obj) => obj.id !== id)];
-    this.setState((prevState) => ({
+    const obj = [...state.professional.filter((obj) => obj.id !== id)];
+    setState((prevState) => ({
       ...prevState,
       professional: [...obj],
     }));
-  }
+  };
 
-  addSkill(e) {
+  const addSkill = (e) => {
     e.preventDefault();
     const value = formatValue(e.target.skills.value);
-    const skills = this.state.skills.concat(value);
-    this.setState(
-      () => ({ skills }),
-      () => {
-        e.target.skills.value = '';
-      }
-    );
-  }
+    const skills = state.skills.concat(value);
+    e.target.value = '';
+    setState({ ...state, skills });
+    e.target.skills.value = '';
+  };
 
-  removeSkill(e) {
+  const removeSkill = (e) => {
     const str = e.currentTarget.previousSibling.data;
-    const skills = [...this.state.skills.filter((skill) => skill !== str)];
-    this.setState(() => ({ skills }));
-  }
+    const skills = [...state.skills.filter((skill) => skill !== str)];
+    setState(() => ({ ...state, skills }));
+  };
 
-  changeViewMode() {
-    this.setState((prevState) => ({
-      ...prevState,
-      preview: !prevState.preview,
-    }));
-  }
-  render() {
-    const { preview } = this.state;
-    return (
-      <div>
-        <button className="changeMode" onClick={this.changeViewMode}>
-          {preview ? 'Edit' : 'Preview'}
-        </button>
-        {preview ? (
-          <Preview cv={this.state} />
-        ) : (
-          <Form
-            cv={this.state}
-            onChangePersonal={this.handlePersonalChange}
-            onChangeProfessional={this.handleProfessionalChange}
-            onChangeEducation={this.handleEducationalChange}
-            onAddProfession={this.addProfession}
-            onAddEducation={this.addEducation}
-            onRemoveProfession={this.removeProfessionalForm}
-            onRemoveEducation={this.removeEducationForm}
-            onAddSkill={this.addSkill}
-            onRemoveSkill={this.removeSkill}
-          />
-        )}
-      </div>
-    );
-  }
-}
+  const changeViewMode = () => {
+    if (!state.errors) {
+      setState((prevState) => ({
+        ...prevState,
+        preview: !prevState.preview,
+      }));
+    } else {
+      alert('Fill the fields as required');
+    }
+  };
+  return (
+    <div>
+      <button className="changeMode" onClick={changeViewMode}>
+        {preview ? 'Edit' : 'Preview'}
+      </button>
+      {preview ? (
+        <Preview cv={state} />
+      ) : (
+        <Form
+          cv={state}
+          onChangePersonal={handlePersonalChange}
+          onChangeProfessional={handleProfessionalChange}
+          onChangeEducation={handleEducationalChange}
+          onAddProfession={addProfession}
+          onAddEducation={addEducation}
+          onRemoveProfession={removeProfessionalForm}
+          onRemoveEducation={removeEducationForm}
+          onAddSkill={addSkill}
+          onRemoveSkill={removeSkill}
+        />
+      )}
+    </div>
+  );
+};
+
 export default App;
 
 const formatValue = (str) => {
