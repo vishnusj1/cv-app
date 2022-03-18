@@ -1,68 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useReducer } from 'react';
+import AppState  from './components/utils/AppState';
+import { formatValue } from './components/utils/utils';
+import stateReducer from './components/utils/stateReducer';
 import uniqid from 'uniqid';
 import Form from './components/form/Form';
 import Preview from './components/preview/Preview';
 import './styles/App.css';
 
 const App = () => {
-  const [state, setState] = useState({
-    personal: {
-      fname: '',
-      lname: '',
-      email: '',
-      phone: '',
-      title: '',
-      summary: '',
-    },
-    professional: [
-      {
-        id: uniqid(),
-        company: '',
-        title: '',
-        from: '',
-        to: '',
-      },
-    ],
-    education: [
-      {
-        id: uniqid(),
-        school: '',
-        degree: '',
-        from: '',
-        to: '',
-      },
-    ],
-    skills: [],
-  });
-  const [preview] = useState(false);
-  // const [errors, setErrors] = useState(false);
+  const [state, dispatch] = useReducer(stateReducer,AppState);
+  const [preview,setPreview] = useState(false);
   useEffect(() => {
-    console.log(state);
-  }, [state]);
+    console.log(state.skills);
+  }, [state.skills]);
 
   const handlePersonalChange = (e) => {
-    const { name, value } = e.target;
-    const personal = {
-      ...state.personal,
-      [name]: value,
-    };
-    setState({ ...state, personal });
+    const {name,value}=e.target;
+    dispatch({
+      type:'personal_change',
+      key:name,
+      payload:{
+        name,
+        value
+      }
+    })
   };
 
   const handleEducationalChange = (e, id) => {
     const { name, value } = e.target;
-    const obj = state.education.map((item) => {
-      if (item.id === id) {
-        return { ...item, [name]: value };
-      } else {
-        return item;
+    dispatch({
+      type:'education_change',
+      payload:{
+        id,
+        name,
+        value
       }
-    });
-    setState((prevState) => ({
-      ...prevState,
-      education: [...obj],
-    }));
+    })
   };
+  
   const addEducation = (e) => {
     const obj = {
       id: uniqid(),
@@ -71,31 +46,35 @@ const App = () => {
       from: '',
       to: '',
     };
-    const education = state.education.concat(obj);
-    setState({ ...state, education });
+    dispatch({
+      type:'add_education_item',
+      payload:{
+        obj
+      }
+    })
   };
+
   const removeEducationForm = (e, id) => {
     e.preventDefault();
-    const obj = [...state.education.filter((obj) => obj.id !== id)];
-    setState((prevState) => ({
-      ...prevState,
-      education: [...obj],
-    }));
+    const obj = state.education.filter((obj) => obj.id !== id);
+    dispatch({
+      type: 'remove_education_item',
+      payload:{
+        obj
+      }
+    })
   };
 
   const handleProfessionalChange = (e, id) => {
     const { name, value } = e.target;
-    const obj = state.professional.map((item) => {
-      if (item.id === id) {
-        return { ...item, [name]: value };
-      } else {
-        return item;
+    dispatch({
+      type:'professional_change',
+      payload:{
+        id,
+        name,
+        value
       }
-    });
-    setState((prevState) => ({
-      ...prevState,
-      professional: [...obj],
-    }));
+    })
   };
 
   const addProfession = (e) => {
@@ -106,47 +85,62 @@ const App = () => {
       from: '',
       to: '',
     };
-    const professional = state.professional.concat(obj);
-    setState({ ...state, professional });
+    dispatch({
+      type:'add_professional_item',
+      payload:{
+        obj
+      }
+    })
   };
 
   const removeProfessionalForm = (e, id) => {
     e.preventDefault();
-    const obj = [...state.professional.filter((obj) => obj.id !== id)];
-    setState((prevState) => ({
-      ...prevState,
-      professional: [...obj],
-    }));
+    const obj = state.professional.filter((obj) => obj.id !== id)
+    dispatch({
+      type:'remove_professional_item',
+      payload:{
+        obj
+      }
+    })
   };
 
   const addSkill = (e) => {
     e.preventDefault();
     const value = formatValue(e.target.skills.value);
     const skills = state.skills.concat(value);
-    e.target.value = '';
-    setState({ ...state, skills });
-    e.target.skills.value = '';
+    dispatch({
+      type:'add_skills',
+      payload:{
+        skills,
+      }
+    })
+    e.target.skills.value=''
   };
 
   const removeSkill = (e) => {
     const str = e.currentTarget.previousSibling.data;
-    const skills = [...state.skills.filter((skill) => skill !== str)];
-    setState(() => ({ ...state, skills }));
+    const skills = state.skills.filter((skill) => skill !== str)
+    dispatch({
+      type:'remove_skills',
+      payload:{
+        skills,
+      }
+    })
   };
 
-  const changeViewMode = () => {
-    if (!state.errors) {
-      setState((prevState) => ({
-        ...prevState,
-        preview: !prevState.preview,
-      }));
-    } else {
-      alert('Fill the fields as required');
-    }
-  };
+  // const changeViewMode = () => {
+  //   if (!state.errors) {
+  //     setState((prevState) => ({
+  //       ...prevState,
+  //       preview: !prevState.preview,
+  //     }));
+  //   } else {
+  //     alert('Fill the fields as required');
+  //   }
+  // };
   return (
     <div>
-      <button className="changeMode" onClick={changeViewMode}>
+      <button className="changeMode" onClick={()=>setPreview(!preview)}>
         {preview ? 'Edit' : 'Preview'}
       </button>
       {preview ? (
@@ -156,10 +150,10 @@ const App = () => {
           cv={state}
           onChangePersonal={handlePersonalChange}
           onChangeProfessional={handleProfessionalChange}
-          onChangeEducation={handleEducationalChange}
           onAddProfession={addProfession}
-          onAddEducation={addEducation}
           onRemoveProfession={removeProfessionalForm}
+          onChangeEducation={handleEducationalChange}
+          onAddEducation={addEducation}
           onRemoveEducation={removeEducationForm}
           onAddSkill={addSkill}
           onRemoveSkill={removeSkill}
@@ -168,9 +162,5 @@ const App = () => {
     </div>
   );
 };
-
 export default App;
 
-const formatValue = (str) => {
-  return str[0].toUpperCase() + str.substring(1);
-};
