@@ -5,11 +5,12 @@ import ProfessionalForm from './ProfessionalForm';
 import SkillForm from './SkillForm';
 
 const Form = (props) => {
-  const { personal, education, professional, skills } = props.cv;
-  const { onChangePersonal, onChangeProfessional, onChangeEducation } = props;
-  const { onAddEducation, onAddProfession } = props;
-  const { onRemoveEducation, onRemoveProfession } = props;
+  const { personal,professional,education,skills } = props.cv;
+  const { onChangePersonal,onChangeProfessional,onChangeEducation} = props;
+  const {onAddEducation,onRemoveEducation}=props;
+  const {onAddProfession,onRemoveProfession}=props;
   const { onAddSkill, onRemoveSkill } = props;
+  
   return (
     <div className="form container">
       <PersonalForm personalInfo={personal} handleChange={onChangePersonal} />
