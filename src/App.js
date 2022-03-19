@@ -1,7 +1,7 @@
-import React, { useEffect, useState,useReducer } from 'react';
-import AppState  from './components/utils/AppState';
-import { formatValue } from './components/utils/utils';
-import stateReducer from './components/utils/stateReducer';
+import React, {useState,useReducer } from 'react';
+import AppState  from './utils/AppState';
+import { formatValue } from './utils/utils';
+import stateReducer from './utils/stateReducer';
 import uniqid from 'uniqid';
 import Form from './components/form/Form';
 import Preview from './components/preview/Preview';
@@ -10,9 +10,6 @@ import './styles/App.css';
 const App = () => {
   const [state, dispatch] = useReducer(stateReducer,AppState);
   const [preview,setPreview] = useState(false);
-  useEffect(() => {
-    console.log(state.skills);
-  }, [state.skills]);
 
   const handlePersonalChange = (e) => {
     const {name,value}=e.target;
