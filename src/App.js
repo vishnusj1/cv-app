@@ -127,17 +127,6 @@ const App = () => {
       }
     })
   };
-
-  // const changeViewMode = () => {
-  //   if (!state.errors) {
-  //     setState((prevState) => ({
-  //       ...prevState,
-  //       preview: !prevState.preview,
-  //     }));
-  //   } else {
-  //     alert('Fill the fields as required');
-  //   }
-  // };
   return (
     <div>
       <button className="changeMode" onClick={()=>setPreview(!preview)}>
